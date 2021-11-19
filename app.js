@@ -374,39 +374,40 @@ app.get("/my-bids", function(req, res) {
     User.findById(req.user._id, function(err, foundList) {
       if (err) {
         console.log(err);
-      } else if (!foundList) {
-        res.render("buyer/my-bids", { biddingDetails: biddingDetails });
       } else {
-        console.log(foundList);
-        for (var i = 0; i < foundList.biddings.length; i++) {
-          User.findOne(
-            { "listings._id": foundList.biddings[i].productId },
-            "listings.$",
-            function(err, foundListingList) {
-              if (err) {
-                console.log(err);
-              } else {
-                console.log(foundListingList);
+        console.log("foundUserBidsList: ", foundList.biddings);
+        var foundUserBidsList = foundList.biddings;
+        async function createMyBidsObjects() {
+          // creating my bids objects from biddings from user and bidding product id to find specific listing from seller for product name , descriptions, etc and then reapeat the same process for all bids
+          for (var i = 0; i < foundUserBidsList.length; i++) {
+            console.log(i);
 
-                biddingDetail = {
-                  productName: foundListingList.listings[0].productName,
-                  productCategory: foundListingList.listings[0].productCategory,
-                  productDescription:
-                    foundListingList.listings[0].productDescription,
-                  productEndTime: foundListingList.listings[0].productEndTime,
-                  productBid: foundList.biddings[0].productBid,
-                  productId: foundList.biddings[0].productId,
-                };
+            var foundListingList = await User.findOne(
+              { "listings._id": foundUserBidsList[i].productId },
+              "listings.$"
+            ).exec();
+            console.log("foundListingList: ", foundListingList);
 
-                biddingDetails.push(biddingDetail);
-                console.log(biddingDetails);
+            biddingDetail = {
+              productName: foundListingList.listings[0].productName,
+              productCategory: foundListingList.listings[0].productCategory,
+              productDescription:
+                foundListingList.listings[0].productDescription,
+              productEndTime: foundListingList.listings[0].productEndTime,
+              productBid: foundList.biddings[i].productBid,
+              productId: foundList.biddings[i].productId,
+            };
 
-                //get listing details such as category,name,bid endtime, bid(from foundList.biddings[i].productBid ) an create a new object and add push it to an array then repeat the loop for all foundList.biddings.length and then pass that array to the my bids for display :)
-                res.render("buyer/my-bids", { biddingDetails: biddingDetails });
-              }
-            }
-          );
+            console.log("biddingDetail: ", biddingDetail);
+            biddingDetails.push(biddingDetail);
+          }
         }
+        createMyBidsObjects().then((_) => {
+          console.log("After createMyBidsObjects() resolved");
+          res.render("buyer/my-bids", {
+            biddingDetails: biddingDetails,
+          });
+        });
       }
     });
   } else {
@@ -439,7 +440,7 @@ app.post("/create-bid/:id", function(req, res) {
           err,
           foundUserList
         ) {
-          console.log("foundUserList: ",foundUserList);
+          console.log("foundUserList: ", foundUserList);
           if (err) {
             console.log(err);
           } else if (!foundUserList) {

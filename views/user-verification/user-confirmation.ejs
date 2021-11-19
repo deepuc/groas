@@ -3,18 +3,18 @@
   <h1>Confirmation</h1>
 
   <% if(typeof alerts !='undefined' ) { %> <% for(var i=0 ; i < alerts.length;
-    i++) { %>
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      <strong>Oops! </strong>
-      <%= alerts[i] %>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
-    <% } %> <% } %>
+  i++) { %>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Oops! </strong>
+    <%= alerts[i] %>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  <% } %> <% } %>
 
   <div class="row">
     <div class="col-sm-8">
@@ -31,7 +31,7 @@
                 aria-describedby="emailHelp"
               />
               <div id="emailHelp" class="form-text">
-               Please Re-enter your email.
+                Please Re-enter your email.
               </div>
             </div>
             <button type="submit" class="btn btn-dark">Verify</button>
