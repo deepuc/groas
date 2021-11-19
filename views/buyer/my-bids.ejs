@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+
+<div class="container-fluid">
+  <h2 class="list-heading">My Bids</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover table-striped table-dark">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Image</th>
+          <th scope="col">Category</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">My Bid</th>
+          <th scope="col">Bid Endtime</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var i =0; i < biddingDetails.length ; i++ ) { %>
+        <tr>
+          <th scope="row"><%= (i+1) %></th>
+          <td>
+            <img src="https://via.placeholder.com/150" alt="product image" />
+          </td>
+          <td><%= biddingDetails[i].productCategory %></td>
+          <td><%= biddingDetails[i].productName %></td>
+          <td>Rs. <%= biddingDetails[i].productBid %></td>
+          <td><%= biddingDetails[i].productEndTime %></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

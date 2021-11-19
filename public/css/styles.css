@@ -1,0 +1,21 @@
+body {
+  background-color: #e8ecef;
+}
+
+.centered {
+  padding-top: 200px;
+  text-align: center;
+}
+
+/* Headings */
+
+.list-heading {
+  margin-top: 50px;
+}
+
+
+/* Containers */
+
+.container-fluid{
+  padding: 1% 5%;
+}

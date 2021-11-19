@@ -1,0 +1,71 @@
+<%- include('../partials/header') %>
+
+<main class="flex-shrink-0">
+  <div class="container-fluid">
+    <h2 class="list-heading">Your listings</h2>
+    <div class="table-responsive">
+      <table
+        class="table table-bordered table-hover table-striped table-dark text-center"
+      >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Image</th>
+            <th scope="col">Category</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Higgest Bid</th>
+            <th scope="col">Bid Endtime</th>
+            <th scope="col">Edit Listing</th>
+            <th scope="col">Bidders</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var i =0; i < listings.length ; i++ ) { %>
+          <tr>
+            <th scope="row"><%= (i+1) %></th>
+            <td>
+              <img src="https://via.placeholder.com/150" alt="product image" />
+            </td>
+            <td><%= listings[i].productCategory %></td>
+            <td><%= listings[i].productName %></td>
+            <td>Rs. <%= listings[i].productMinimumBid %></td>
+            <td><%= listings[i].productEndTime %></td>
+            <td>
+              <a
+                class="btn btn-light"
+                href="/listings/product/<%= (listings[i]._id) %>"
+                role="button"
+                >Edit</a
+              >
+              <!-- Todo: make this listing editable -->
+            </td>
+            <td>
+              <a
+                class="btn btn-light"
+                href="/listings/product-bidders-list/<%= (listings[i]._id) %>"
+                role="button"
+                >Bidders</a
+              >
+            </td>
+            <td>
+              <a
+                class="btn-close btn-close-white"
+                href="/remove-listing/<%= (listings[i]._id) %>"
+                role="button"
+                type="button"
+                aria-label="Delete"
+              ></a>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <a class="btn btn-dark btn-lg" href="/create-listing" role="button"
+      >+ Create new listing</a
+    >
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
